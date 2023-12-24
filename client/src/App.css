@@ -1,0 +1,17 @@
+.layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+.App {
+    
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+
+}
