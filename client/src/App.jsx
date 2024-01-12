@@ -9,15 +9,22 @@ import FavoritePage from "./pages/FavoritePage";
 import QnAPage from "./pages/QnAPage";
 import ReportPage from "./pages/ReportPage";
 import AccountPage from "./pages/AccountPage";
-import LandingPage from "./pages/LandingPage";
-import React, { useMemo, useReducer, useRef} from "react";
+// import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage-re";
+import React, { useEffect, useMemo, useReducer } from "react";
 import QnACreate from "./pages/QnAPage/Section/QnACreate";
 import QnADetail from "./pages/QnAPage/Section/QnADetail";
 import QnAEdit from "./pages/QnAPage/Section/QnAEdit";
+import AnalysisPage from "./pages/AnalysisPage";
+import axios from "axios";
+import ProductPage from "./pages/ProductPage";
+import ProductSearchPage from "./pages/ProductPage/Section/ProductSearchPage";
+import ProductDetailPage from "./pages/ProductPage/Section/ProductDetailPage";
+import ExamplePage from "./pages/ExamplePage";
 
 const reducer = (state, action) => {
   let newState = [];
-  switch(action.type) {
+  switch (action.type) {
     case "INIT": {
       return action.data;
     }
@@ -30,7 +37,9 @@ const reducer = (state, action) => {
       break;
     }
     case "EDIT": {
-      newState = state.map((it) => it.id === action.data.id ? {...action.data} : it );
+      newState = state.map((it) =>
+        it.id === action.data.id ? action.data : it,
+      );
       break;
     }
     default:
@@ -39,109 +48,91 @@ const reducer = (state, action) => {
   return newState;
 };
 
-export const PostStateContext = React.createContext();
 export const PostDispatchContext = React.createContext();
 
-// 더미데이터 사용
-const dummyList = [
-    {
-      id:1,
-      title:"title1",
-      date: new Date().getTime(),
-      content: "content1"
-    },
-    {
-      id:2,
-      title:"title2",
-      date: new Date().getTime(),
-      content: "content2"
-    },
-    {
-      id:3,
-      title:"title3",
-      date: new Date().getTime(),
-      content: "content3"
-    },
-    {
-      id:4,
-      title:"title4",
-      date: new Date().getTime(),
-      content: "content4"
-    },
-    {
-      id:5,
-      title:"title5",
-      date: new Date().getTime(),
-      content: "content5"
-    },
-  ];
-
 function App() {
+  const [data, dispatch] = useReducer(reducer, []);
 
-  const [data, dispatch] = useReducer(reducer,dummyList);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/query");
+        const responseData = response.data.post_list;
 
-  const dataId = useRef(6); // 새로 추가되는 데이터 아이디
+        dispatch({ type: "INIT", data: responseData });
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const onCreate = (title, content) => {
     const current_date = new Date().getTime();
     dispatch({
       type: "CREATE",
       data: {
-        id: dataId.current,
         date: current_date,
         title,
         content,
-      }
+      },
     });
-    dataId.current += 1;
   };
 
   const onRemove = (targetId) => {
     dispatch({
-      type:"REMOVE", targetId
+      type: "REMOVE",
+      targetId,
     });
-  }
+  };
 
   const onEdit = (targetId, date, title, content) => {
     dispatch({
-      type:"EDIT",
+      type: "EDIT",
       data: {
         id: targetId,
         date: new Date(date).getTime(),
         title,
         content,
-      }
+      },
     });
-  }
+  };
 
   const memoizedDispatches = useMemo(() => {
-    return {onCreate, onRemove, onEdit}
-  },[])
+    return { onCreate, onRemove, onEdit };
+  }, []);
 
   return (
-    <PostStateContext.Provider value={data}>
-      <PostDispatchContext.Provider value={memoizedDispatches}>
-    <div className="App">
-      <BrowserRouter>
-        <Header />
-        <div className="layout">
-          <LeftNav />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/favorite" element={<FavoritePage />} />
-            <Route path="/question" element={<QnAPage/>} />
-            <Route path="/report" element={<ReportPage />} />
-            <Route path="/question/create" element={<QnACreate/>}/>
-            <Route path="/question/:id" element={<QnADetail/>}/>
-            <Route path="/question/edit/:id" element={<QnAEdit/>}/>
-          </Routes>
-        </div>
-        {/*<Footer />*/}
-      </BrowserRouter>
-    </div>
+    <PostDispatchContext.Provider value={memoizedDispatches}>
+      <div className="App">
+        <BrowserRouter>
+          <Header />
+          <div className="layout">
+            {/*<LeftNav />*/}
+            <Routes>
+              <Route path="/" element={<ExamplePage />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/analysis" element={<AnalysisPage />} />
+              <Route path="/product" element={<ProductPage />} />
+              <Route path="/product/search" element={<ProductSearchPage />} />
+              <Route
+                path="/product/select/detail/:product_id"
+                element={<ProductDetailPage />}
+                Component={ProductDetailPage}
+              />
+              <Route path="/favorite" element={<FavoritePage />} />
+              <Route path="/question" element={<QnAPage />} />
+              <Route path="/report" element={<ReportPage />} />
+              <Route path="/question/create" element={<QnACreate />} />
+              <Route path="/question/:id" element={<QnADetail />} />
+              <Route path="/question/edit/:id" element={<QnAEdit />} />
+            </Routes>
+          </div>
+          {/*<Footer />*/}
+        </BrowserRouter>
+      </div>
     </PostDispatchContext.Provider>
-    </PostStateContext.Provider>
   );
 }
 

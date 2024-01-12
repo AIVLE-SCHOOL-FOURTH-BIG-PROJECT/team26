@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width:300px;
+  padding-left: 5px;
+  padding-right: 5px;
+
   .titleWrap {
     font-size: 20px;
     font-weight: 700;
@@ -9,13 +13,15 @@ export const Container = styled.div`
 
   .contentWrap {
     margin-top: 26px;
-    flex: 1;
+    // flex: 1;
   }
 
   .inputTitle {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: #262626;
+    margin-left: 5px;
+    text-align : left;
   }
 
   .inputWrap {
@@ -45,9 +51,10 @@ export const Container = styled.div`
   }
 
   .errorMessageWrap {
+    text-align: left;
     margin-top: 8px;
     color: #ef0000;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .bottomButton {
@@ -55,10 +62,40 @@ export const Container = styled.div`
     height: 48px;
     border: none;
     font-weight: 700;
-    background-color: #0f62fe;
-    border-radius: 64px;
-    color: white;
-    margin-bottom: 10px;
+    background-color: #ebeeef;
+    border: 2px solid #eeeeee;
+    border-radius: 8px;
+    color: #0f62fe;
+
+    transition: 0.2s;
+    margin-top: 10%;
+    margin-bottom: 3%;
     cursor: pointer;
+  }
+
+  .bottomButton:hover {
+    color: #fff;
+    background-color: #0f62fe;
+  }
+
+  .existErrorMessage{
+    text-align: left;
+    color: #ef0000;
+    font-size : 14px;
+  }
+
+  .registerLine {
+      text-align: center;
+      color: #bcbcbc;
+      font-size: 13px;
+      margin-bottom: 10px;
+      // margin-top: 8px;
+      .registerButton {
+          border: none;
+          color: black;
+          background-color: white;
+          text-decoration: underline;
+          cursor: pointer;
+      }
   }
 `;

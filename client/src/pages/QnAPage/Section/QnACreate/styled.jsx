@@ -1,53 +1,116 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    .QnACreate {
-        // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        // border: 1px solid #ddd;
-        text-align: center;
-        padding : 20px;
-        margin-left: 265px;
+  @media (min-width: 1200px) {
+    padding-left: 170px;
+  }
+  article {
+    width: 100%;
+    width: 800px;
+    max-width: 600px;
+    min-width: 360px;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 40px;
+    margin-left: 440px;
+    background-color: white;
+
+    .warn-length {
+      font-size: 12px;
+      color: red;
     }
 
-    .QnACreate input,
-    textarea {
-        margin-bottom: 20px;
-        width: 500px;
-        pdding: 10px;
-        height: 30px;
-        // box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        // border:5px outset;
+    @media (max-width: 1200px) {
+      margin-left: 180px;
     }
 
-    .QnACreate textarea {
-        height: 200px;
+    @media (max-width: 900px) {
+      width: 80%;
+      margin-left: 100px;
     }
 
-    .QnACreate button {
-        width: 25%;
-        padding: 10px;
-        cursor: pointer;
-        background: #99CCFF; 
-        color: #fff;
-        border-radius:5px;
-        border-color: #99CCFF;
+    @media (max-width: 768px) {
+      margin-left: 40px;
     }
 
-    .btn-container {
-        display: flex;
-        justify-content: space-between;
+    @media (max-width: 576px) {
+      margin-left: 0px;
     }
+  }
 
-    .QnACreate button:hover,
-    .QnACreate button:focus {
-        background: #0000FF; 
-        border-color: #0000FF; 
-        color: #fff;
-    }
+  .quill {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin-bottom: 0px;
+  }
 
-    .QnACreate div p {
-        margin: 0;
-        // margin-left: 0;
-        text-align: left;
-      }
+  .ql-editor {
+    max-width: 600px;
+    flex-direction: column;
+  }
+
+  .ql-toolbar {
+    margin-bottom: 0px;
+  }
+
+  .ql-container {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    cursor: text;
+    height: 300px;
+    margin-bottom: 0px;
+  }
+
+  .ql-container:focus {
+    border: black;
+  }
+
+  .ql-editor.ql-blank::before {
+    font-family: "Noto Sans KR", sans-serif;
+    font-style: normal !important;
+    width: 630px;
+  }
+
+  input[type="text"] {
+    width: 95%;
+    height: 40px;
+
+    padding: 10px;
+    margin-bottom: 0px;
+    background-color: #f0f0f0;
+    border: none;
+    border-bottom: 1px solid #d5d5d5;
+    background-color: white;
+  }
+
+  div {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .btn-container button {
+    width: 25%;
+    padding: 10px;
+    cursor: pointer;
+    background: #f6f8fa;
+    color: #3f5dfe;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-container button:hover,
+  .btn-container button:focus {
+    background: #0f62fe;
+    border: none;
+    color: #fff;
+  }
 `;
